@@ -1,6 +1,6 @@
 import numpy,time
 from solver import *
-from libsmop import *
+from .libsmop import *
 
 def main():
     ai = matlabarray(zeros(10,10,dtype=int))
@@ -21,8 +21,8 @@ def main():
     t0 = time.clock()
     mv = solver(ai,af,0)
     t1 = time.clock()
-    print(t1-t0)
-    print(mv.shape)
+    print((t1-t0))
+    print((mv.shape))
 
 if __name__ == '__main__':
     main()

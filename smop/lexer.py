@@ -6,6 +6,7 @@ import re
 import ply.lex as lex
 from ply.lex import TOKEN
 from . import options
+import imp
 
 
 tokens = [
@@ -341,12 +342,12 @@ def main():
     line = ""
     while 1:
         try:
-            line += raw_input("=>> ").decode("string_escape")
-            print(len(line), [c for c in line])
+            line += input("=>> ").decode("string_escape")
+            print((len(line), [c for c in line]))
         except EOFError:
-            reload(sys.modules["lexer.py"])
+            imp.reload(sys.modules["lexer.py"])
             lexer.input(line)
-            print(list(tok for tok in lexer))
+            print((list(tok for tok in lexer)))
             line = ""
 
 
