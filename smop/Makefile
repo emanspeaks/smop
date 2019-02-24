@@ -13,8 +13,8 @@ CYTHON = cython
 PYTHON = python$V
 XFILES = -x inputParser.m,dblquad.m,triplequad.m
 SMOP   = smop
-SRCSMOP = main.py parse.py backend.py resolve.py options.py
-FLAGS  = 
+SRCSMOP = main.py parser.py backends.py resolver.py options.py
+FLAGS  =
 MYFLAGS=
 PYTEST = python -m pytest
 
@@ -28,9 +28,9 @@ all: solver.py
 	$(PYTEST) test_solver.py
 	#$(PYTEST) test_primes.py
 
-	#make -B FLAGS=     liboctave.py	
+	#make -B FLAGS=     liboctave.py
 	#$(COVERAGE) run -p main.py solver.m
-	#$(COVERAGE) combine 
+	#$(COVERAGE) combine
 foo:
 	make -B FLAGS=-C   liboctave.py
 	make -B FLAGS=-N   liboctave.py

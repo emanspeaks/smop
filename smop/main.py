@@ -1,30 +1,26 @@
 # SMOP -- Simple Matlab/Octave to Python compiler
 # Copyright 2011-2016 Victor Leikehman
 
-from __future__ import print_function
-
-import py_compile
-import tempfile
-import fnmatch
-import tarfile
 import sys
-import os
 import traceback
 from os.path import basename, splitext
 
 from . import options
-from . import parse
-from . import resolve
-from . import backend
+from .parser import parse
+from .resolver import resolve
+from .backends import backend
 from . import version
+
 
 def print_header(fp):
     if options.no_header:
         return
-    #print("# Running Python %s" % sys.version, file=fp)
+    # print("# Running Python %s" % sys.version, file=fp)
     print("# Generated with SMOP ", version.__version__, file=fp)
-    print("from libsmop import *", file=fp)
+    print("from smop import libsmop", file=fp)
+    print("import numpy as np", file=fp)
     print("#", options.filename, file=fp)
+
 
 def main():
     if "M" in options.debug:
@@ -58,14 +54,15 @@ def main():
             buf = open(options.filename).read()
             buf = buf.replace("\r\n", "\n")
             # FIXME buf = buf.decode("ascii", errors="ignore")
-            stmt_list = parse.parse(buf if buf[-1] == '\n' else buf + '\n')
+            stmt_list = parse(buf if buf[-1] == '\n' else buf + '\n')
 
             if not stmt_list:
                 continue
             if not options.no_resolve:
-                G = resolve.resolve(stmt_list)
+                # G =
+                resolve(stmt_list)
             if not options.no_backend:
-                s = backend.backend(stmt_list)
+                s = backend(stmt_list)
             if not options.output:
                 f = splitext(basename(options.filename))[0] + ".py"
                 with open(f, "w") as fp:
@@ -75,7 +72,7 @@ def main():
                 fp.write(s)
         except KeyboardInterrupt:
             break
-        except:
+        except Exception:
             nerrors += 1
             traceback.print_exc(file=sys.stdout)
             if options.strict:
@@ -84,3 +81,7 @@ def main():
             pass
     if nerrors:
         print("Errors:", nerrors)
+
+
+if __name__ == "__main__":
+    main()

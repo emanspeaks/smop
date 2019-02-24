@@ -26,13 +26,11 @@ requirements:
     - ply
     - numpy
     - scipy
-    - networkx
   run:
     - python
     - ply
     - numpy
     - scipy
-    - networkx
 
 test:
   imports:

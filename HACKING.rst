@@ -1,6 +1,6 @@
-node.py     resolve.py
+node.py     resolver.py
 
-class       method 
+class       method
 node.ident  self.ident
 
 
@@ -15,7 +15,7 @@ HACKING
 |                                         |       |       |       |
 |   A. Base-one indexing                  |  yes  | yes   |  no   |
 +-----------------------------------------+-------+-------+-------+
-|                                         |       |       |       | 
+|                                         |       |       |       |
 |   B. Columns-first data layout          |  yes  | yes   |  no   |
 +-----------------------------------------+-------+-------+-------+
 |   C. Auto-expanding arrays              |  yes  | no *  |  yes  |
@@ -58,8 +58,8 @@ HACKING
 C. Auto-expanding arrays
   Matlab arrays are auto-magically resized on out-of-bounds
   update.  Deprecated, this feature is widely used in legacy code.
-  Supporting this feature is hard both in python and in fortran.  
-  
+  Supporting this feature is hard both in python and in fortran.
+
   In fortran, the pattern should be somehow (how exactly?) detected in
   compile-time.  In python ``__setitem__`` hides ``try-catch``, with
   ``resize`` called inside ``catch``.  Is try-catch in fortran?
